@@ -18,11 +18,45 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '27.1.1'
+    constraintLayoutVersion = '1.1.0'
+    retrofitVersion = '2.2.0'
+    junitVersion = '4.12'
+    runnerRulesVersion = '1.0.2'
+    espressoVersion = '3.0.2'
+    rxjavaVersion = '2.0.1'
+    circleimageviewVersion = '2.1.0'
+    agentWeb = '4.0.2'
+    flowLayout = '1.1.2'
+    banner = '1.4.10'
+    glide= '3.7.0'
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    implementation "com.android.support:design:$supportLibVersion"
+    implementation "com.android.support:cardview-v7:$supportLibVersion"
+    implementation "com.android.support:preference-v14:$supportLibVersion"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    //RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxjavaVersion"
+    //CircleImage
+    implementation "de.hdodenhof:circleimageview:$circleimageviewVersion"
+    //AgentWeb
+    implementation "com.just.agentweb:agentweb:$agentWeb"
+    //FlowLayout
+    implementation "com.hyman:flowlayout-lib:$flowLayout"
+    //Banner
+    implementation "com.youth.banner:banner:$banner"
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glide"
+
 }
