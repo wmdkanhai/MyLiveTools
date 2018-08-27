@@ -1,7 +1,10 @@
 package wmding.example.com.mylivetools;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import wmding.example.com.mylivetools.fragment.FirstFragment;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+
+    private BottomNavigationView bottomNavigationView;
+    private Fragment mFirstFragment;
 
 
     @Override
@@ -24,6 +32,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initView();
+        initFragments(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (mFirstFragment.isAdded()) {
+            fragmentManager.putFragment(outState, FirstFragment.class.getSimpleName(), mFirstFragment);
+        }
+
     }
 
     private void initView() {
@@ -36,6 +55,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_first:
+                        showFragment(mFirstFragment);
+                        break;
+                    case R.id.nav_second:
+                        break;
+                    case R.id.nav_third:
+                        break;
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+
+    }
+
+    private void initFragments(Bundle savedInstanceState) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (savedInstanceState != null) {
+            mFirstFragment = fragmentManager.getFragment(savedInstanceState, FirstFragment.class.getSimpleName());
+        } else {
+            mFirstFragment = FirstFragment.newInstance();
+        }
+
+        if (!mFirstFragment.isAdded()){
+            fragmentManager.beginTransaction()
+                    .add(R.id.frame_layout,mFirstFragment,FirstFragment.class.getSimpleName())
+                    .commit();
+        }
+
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragment instanceof FirstFragment) {
+            fragmentManager.beginTransaction()
+                    .show(mFirstFragment)
+//                    .hide(categoriesFragment)
+//                    .hide(aboutFragment)
+                    .commit();
+            setTitle("aaa");
+
+        }
 
     }
 

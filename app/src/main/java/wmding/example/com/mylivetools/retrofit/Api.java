@@ -6,6 +6,9 @@ package wmding.example.com.mylivetools.retrofit;
  */
 public class Api {
 
-    public static final String API_BASE = "http://www.xxx.com/";
+    //Base API.
+    public static final String API_BASE = "http://www.wanandroid.com/";
 
+    //获取文章列表
+    public static final String ARTICLE_LIST = API_BASE + "article/list/";
 }

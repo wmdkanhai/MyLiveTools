@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import wmding.example.com.mylivetools.bean.ArticlesData;
 
 /**
  * Created by CoderLengary
@@ -24,9 +25,11 @@ public interface RetrofitService {
 //    @POST(Api.REGISTER)
 //    Observable<LoginData> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
 //
-//    //获取首页文章
-//    @GET(Api.ARTICLE_LIST + "{page}/json")
-//    Observable<ArticlesData> getArticles(@Path("page") int page);
+    //获取首页文章
+    @GET(Api.ARTICLE_LIST + "{page}/json")
+    Observable<ArticlesData> getArticles(@Path("page") int page);
+
+
 //
 //    //获取分类文章，cid指的是类别
 //    @GET(Api.ARTICLE_LIST + "{page}/json")
