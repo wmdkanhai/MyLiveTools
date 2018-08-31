@@ -70,6 +70,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return;
         }
         NormalViewHolder normalViewHolder = (NormalViewHolder) holder;
+//        ArticleDetailData data = mList.get(getRealPosition(position));
         ArticleDetailData data = mList.get(getRealPosition(position));
         normalViewHolder.textAuthor.setText(data.getAuthor());
         normalViewHolder.textTitle.setText(StringUtil.replaceInvalidChar(data.getTitle()));
@@ -88,7 +89,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return mList.size()+1;
+        return mList.size();
     }
 
 

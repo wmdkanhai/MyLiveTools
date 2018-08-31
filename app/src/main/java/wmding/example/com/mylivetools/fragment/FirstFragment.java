@@ -169,7 +169,7 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
 //                    startActivity(intent);
                 }
             });
-            //adapter.setHeaderView(null);
+            adapter.setHeaderView(null);
             recyclerView.setAdapter(adapter);
         }
     }
