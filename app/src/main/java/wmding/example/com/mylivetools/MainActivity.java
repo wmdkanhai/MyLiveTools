@@ -14,16 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import wmding.example.com.mylivetools.fragment.FirstFragment;
+import wmding.example.com.mylivetools.fragment.first.FirstFragment;
+import wmding.example.com.mylivetools.fragment.second.SecondFragment;
+import wmding.example.com.mylivetools.fragment.third.ThirdFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID = "KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID";
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
 
     private BottomNavigationView bottomNavigationView;
-    private Fragment mFirstFragment;
+    private FirstFragment mFirstFragment;
+    private SecondFragment mSecondFragment;
+    private ThirdFragment mThirdFragment;
 
 
     @Override
@@ -33,14 +39,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initView();
         initFragments(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            int selectId = savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID);
+            switch (selectId) {
+                case R.id.nav_first:
+                    showFragment(mFirstFragment);
+                    break;
+                case R.id.nav_second:
+                    showFragment(mSecondFragment);
+                    break;
+                case R.id.nav_third:
+                    showFragment(mThirdFragment);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            showFragment(mFirstFragment);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, bottomNavigationView.getSelectedItemId());
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (mFirstFragment.isAdded()) {
             fragmentManager.putFragment(outState, FirstFragment.class.getSimpleName(), mFirstFragment);
+        } else if (mSecondFragment.isAdded()) {
+            fragmentManager.putFragment(outState, SecondFragment.class.getSimpleName(), mSecondFragment);
+        } else if (mThirdFragment.isAdded()) {
+            fragmentManager.putFragment(outState, ThirdFragment.class.getSimpleName(), mThirdFragment);
         }
 
     }
@@ -57,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -65,8 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         showFragment(mFirstFragment);
                         break;
                     case R.id.nav_second:
+                        showFragment(mSecondFragment);
                         break;
                     case R.id.nav_third:
+                        showFragment(mThirdFragment);
                         break;
                     default:
                         break;
@@ -83,14 +117,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState != null) {
-            mFirstFragment = fragmentManager.getFragment(savedInstanceState, FirstFragment.class.getSimpleName());
+            mFirstFragment = (FirstFragment) fragmentManager.getFragment(savedInstanceState, FirstFragment.class.getSimpleName());
+            mSecondFragment = (SecondFragment) fragmentManager.getFragment(savedInstanceState, SecondFragment.class.getSimpleName());
+            mThirdFragment = (ThirdFragment) fragmentManager.getFragment(savedInstanceState, ThirdFragment.class.getSimpleName());
         } else {
             mFirstFragment = FirstFragment.newInstance();
+            mSecondFragment = SecondFragment.newInstance();
+            mThirdFragment = ThirdFragment.newInstance();
         }
 
-        if (!mFirstFragment.isAdded()){
+        if (!mFirstFragment.isAdded()) {
             fragmentManager.beginTransaction()
-                    .add(R.id.frame_layout,mFirstFragment,FirstFragment.class.getSimpleName())
+                    .add(R.id.frame_layout, mFirstFragment, FirstFragment.class.getSimpleName())
+                    .commit();
+        }
+
+        if (!mSecondFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.frame_layout, mSecondFragment, SecondFragment.class.getSimpleName())
+                    .commit();
+        }
+
+        if (!mThirdFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.frame_layout, mThirdFragment, ThirdFragment.class.getSimpleName())
                     .commit();
         }
 
@@ -101,11 +151,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragment instanceof FirstFragment) {
             fragmentManager.beginTransaction()
                     .show(mFirstFragment)
-//                    .hide(categoriesFragment)
-//                    .hide(aboutFragment)
+                    .hide(mSecondFragment)
+                    .hide(mThirdFragment)
                     .commit();
-            setTitle("aaa");
-
+            setTitle("111");
+        } else if (fragment instanceof SecondFragment) {
+            fragmentManager.beginTransaction()
+                    .show(mSecondFragment)
+                    .hide(mFirstFragment)
+                    .hide(mThirdFragment)
+                    .commit();
+            setTitle("222");
+        } else if (fragment instanceof ThirdFragment) {
+            fragmentManager.beginTransaction()
+                    .show(mThirdFragment)
+                    .hide(mFirstFragment)
+                    .hide(mSecondFragment)
+                    .commit();
+            setTitle("333");
         }
 
     }
