@@ -22,7 +22,6 @@ import wmding.example.com.mylivetools.utils.StringUtil;
  * Created by CoderLengary
  */
 
-
 public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
@@ -34,26 +33,27 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final int NORMAL_VIEW = 1;
     private View mHeaderView;
 
-    public ArticlesAdapter(Context context, List<ArticleDetailData> list){
+    public ArticlesAdapter(Context context, List<ArticleDetailData> list) {
         this.context = context;
         inflater = LayoutInflater.from(this.context);
         mList = list;
     }
 
-    public void updateData(List<ArticleDetailData> list){
+    public void updateData(List<ArticleDetailData> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
         notifyItemRemoved(list.size());
     }
 
-    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener) {
         this.listener = listener;
     }
 
     public void setCategoryListener(OnCategoryOnClickListener listener) {
         categoryListener = listener;
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,7 +61,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return new NormalViewHolder(mHeaderView, null, null);
         }
         View view = inflater.inflate(R.layout.item_article, parent, false);
-        return new NormalViewHolder(view,listener,categoryListener);
+        return new NormalViewHolder(view, listener, categoryListener);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         normalViewHolder.textAuthor.setText(data.getAuthor());
         normalViewHolder.textTitle.setText(StringUtil.replaceInvalidChar(data.getTitle()));
         //if the text is too long, the button can not show it correctly.The solution is adding " ".
-        normalViewHolder.btnCategory.setText("  "+data.getChapterName()+"  ");
+        normalViewHolder.btnCategory.setText("  " + data.getChapterName() + "  ");
         normalViewHolder.textTime.setText(data.getNiceDate());
     }
 
@@ -109,7 +109,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return NORMAL_VIEW;
     }
 
-    class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         OnRecyclerViewItemOnClickListener listener;
         OnCategoryOnClickListener categoryListener;
@@ -118,7 +118,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         AppCompatTextView textTitle;
         AppCompatTextView textAuthor;
         AppCompatTextView textTime;
-
 
 
         public NormalViewHolder(View itemView, final OnRecyclerViewItemOnClickListener listener, final OnCategoryOnClickListener categoryListener) {
@@ -141,13 +140,14 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.card_view_layout:
-                    listener.onClick(view,getRealPosition(getAdapterPosition()));
+                    listener.onClick(view, getRealPosition(getAdapterPosition()));
                     break;
 
                 case R.id.btn_category:
-                    categoryListener.onClick(view,getRealPosition(getAdapterPosition()));
+                    categoryListener.onClick(view, getRealPosition(getAdapterPosition()));
                     break;
-                default:break;
+                default:
+                    break;
 
             }
         }

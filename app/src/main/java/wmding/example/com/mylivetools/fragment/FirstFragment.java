@@ -1,7 +1,6 @@
 package wmding.example.com.mylivetools.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -89,6 +88,7 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
         emptyView.setVisibility(View.INVISIBLE);
         refreshLayout = view.findViewById(R.id.refresh_layout);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout.setRefreshing(true);
 
     }
 
@@ -172,6 +172,16 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
             adapter.setHeaderView(null);
             recyclerView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void setLoadingIndicator(final boolean isActive) {
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(isActive);
+            }
+        });
     }
 
 

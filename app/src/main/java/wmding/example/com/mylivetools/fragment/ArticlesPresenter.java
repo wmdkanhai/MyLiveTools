@@ -47,14 +47,16 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         if (mView.isActive()) {
-
+                            //设置加载控件不显示
+                            mView.setLoadingIndicator(false);
                         }
                     }
 
                     @Override
                     public void onComplete() {
                         if (mView.isActive()) {
-
+                            //设置加载控件不显示
+                            mView.setLoadingIndicator(false);
                         }
                     }
                 });
