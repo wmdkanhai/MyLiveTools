@@ -1,5 +1,6 @@
 package wmding.example.com.mylivetools;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import wmding.example.com.mylivetools.fragment.first.FirstFragment;
 import wmding.example.com.mylivetools.fragment.second.SecondFragment;
 import wmding.example.com.mylivetools.fragment.third.ThirdFragment;
+import wmding.example.com.mylivetools.module.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -183,7 +185,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
