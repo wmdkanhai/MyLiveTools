@@ -1,6 +1,7 @@
 package wmding.example.com.mylivetools.fragment.first;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +23,7 @@ import wmding.example.com.mylivetools.data.ArticlesDataRepository;
 import wmding.example.com.mylivetools.data.remote.ArticlesDataRemoteSource;
 import wmding.example.com.mylivetools.interfaze.OnCategoryOnClickListener;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
+import wmding.example.com.mylivetools.module.detail.DetailActivity;
 import wmding.example.com.mylivetools.utils.NetworkUtil;
 
 public class FirstFragment extends Fragment implements ArticlesContract.View {
@@ -165,35 +167,22 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
     }
 
     @Override
-    public void showArticles(List<ArticleDetailData> list) {
+    public void showArticles(final List<ArticleDetailData> list) {
         if (adapter != null) {
             adapter.updateData(list);
         } else {
             adapter = new ArticlesAdapter(getContext(), list);
-            adapter.setCategoryListener(new OnCategoryOnClickListener() {
-                @Override
-                public void onClick(View view, int position) {
-//                    Intent intent = new Intent(getContext(), CategoryActivity.class);
-//                    ArticleDetailData data = list.get(position);
-//                    if (data.getChapterName().isEmpty()) {
-//                        return;
-//                    }
-//                    intent.putExtra(CategoryActivity.CATEGORY_ID, data.getChapterId());
-//                    intent.putExtra(CategoryActivity.CATEGORY_NAME, data.getChapterName());
-//                    startActivity(intent);
-                }
-            });
             adapter.setItemClickListener(new OnRecyclerViewItemOnClickListener() {
                 @Override
                 public void onClick(View view, int position) {
-//                    Intent intent = new Intent(getContext(), DetailActivity.class);
-//                    ArticleDetailData data = list.get(position);
-//                    intent.putExtra(DetailActivity.URL, data.getLink());
-//                    intent.putExtra(DetailActivity.TITLE, data.getTitle());
-//                    intent.putExtra(DetailActivity.ID, data.getId());
-//                    intent.putExtra(DetailActivity.FROM_FAVORITE_FRAGMENT, false);
-//                    intent.putExtra(DetailActivity.FROM_BANNER, false);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getContext(), DetailActivity.class);
+                    ArticleDetailData data = list.get(position);
+                    intent.putExtra(DetailActivity.URL, data.getLink());
+                    intent.putExtra(DetailActivity.TITLE, data.getTitle());
+                    intent.putExtra(DetailActivity.ID, data.getId());
+                    intent.putExtra(DetailActivity.FROM_FAVORITE_FRAGMENT, false);
+                    intent.putExtra(DetailActivity.FROM_BANNER, false);
+                    startActivity(intent);
                 }
             });
             adapter.setHeaderView(null);
