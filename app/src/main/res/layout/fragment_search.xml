@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:iconifiedByDefault="false"
                     android:imeOptions="actionSearch|flagNoExtractUi"
-                    app:queryHint="Search articles" />
+                    app:queryHint="@string/search_articles" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 

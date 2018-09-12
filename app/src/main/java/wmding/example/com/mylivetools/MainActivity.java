@@ -156,21 +156,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .hide(mSecondFragment)
                     .hide(mThirdFragment)
                     .commit();
-            setTitle("111");
+            setTitle(R.string.nav_first_name);
         } else if (fragment instanceof SecondFragment) {
             fragmentManager.beginTransaction()
                     .show(mSecondFragment)
                     .hide(mFirstFragment)
                     .hide(mThirdFragment)
                     .commit();
-            setTitle("222");
+            setTitle(R.string.nav_second_name);
         } else if (fragment instanceof ThirdFragment) {
             fragmentManager.beginTransaction()
                     .show(mThirdFragment)
                     .hide(mFirstFragment)
                     .hide(mSecondFragment)
                     .commit();
-            setTitle("333");
+            setTitle(R.string.nav_third_name);
         }
 
     }

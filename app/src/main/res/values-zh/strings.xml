@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">我的生活小工具</string>
+
+    <string name="nav_first_name">文章</string>
+    <string name="nav_second_name">第二个</string>
+    <string name="nav_third_name">第三个</string>
+
+    <string name="search_articles">搜索文章</string>
+
+    <string name="nav_sign_out">登出</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>
