@@ -22,6 +22,9 @@ public class SearchActivity extends AppCompatActivity {
             mSearchFragment = SearchFragment.newInstance();
         }
 
+        new SearchPresenter(ArticlesDataRepository.getInstance(ArticlesDataRemoteSource.getInstance()), mSearchFragment);
+
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.view_pager, mSearchFragment, SearchFragment.class.getSimpleName())
                 .commit();

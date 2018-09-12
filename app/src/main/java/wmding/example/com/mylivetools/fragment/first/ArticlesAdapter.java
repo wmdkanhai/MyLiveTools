@@ -75,7 +75,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         normalViewHolder.textAuthor.setText(data.getAuthor());
         normalViewHolder.textTitle.setText(StringUtil.replaceInvalidChar(data.getTitle()));
         //if the text is too long, the button can not show it correctly.The solution is adding " ".
-        normalViewHolder.btnCategory.setText("  " + data.getChapterName() + "  ");
+        normalViewHolder.textCategory.setText("  " + data.getChapterName() + "  ");
         normalViewHolder.textTime.setText(data.getNiceDate());
     }
 
@@ -114,7 +114,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         OnRecyclerViewItemOnClickListener listener;
         OnCategoryOnClickListener categoryListener;
         CardView cardView;
-        AppCompatButton btnCategory;
+        AppCompatTextView textCategory;
         AppCompatTextView textTitle;
         AppCompatTextView textAuthor;
         AppCompatTextView textTime;
@@ -127,8 +127,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             this.listener = listener;
             this.categoryListener = categoryListener;
-            btnCategory = itemView.findViewById(R.id.btn_category);
-            btnCategory.setOnClickListener(this);
+            textCategory = itemView.findViewById(R.id.text_view_category);
             textTitle = itemView.findViewById(R.id.text_view_title);
             textAuthor = itemView.findViewById(R.id.text_view_author);
             textTime = itemView.findViewById(R.id.text_view_time);
@@ -141,10 +140,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             switch (view.getId()) {
                 case R.id.card_view_layout:
                     listener.onClick(view, getRealPosition(getAdapterPosition()));
-                    break;
-
-                case R.id.btn_category:
-                    categoryListener.onClick(view, getRealPosition(getAdapterPosition()));
                     break;
                 default:
                     break;

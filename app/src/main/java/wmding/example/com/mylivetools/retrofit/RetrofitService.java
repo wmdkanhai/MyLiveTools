@@ -39,9 +39,9 @@ public interface RetrofitService {
 //    @GET(Api.CATEGORIES)
 //    Observable<CategoriesData> getCategories();
 //
-//    //获取查询的文章，k指的是用户输入的词
-//    @POST(Api.QUERY_ARTICLES + "{page}/json")
-//    Observable<ArticlesData> queryArticles(@Path("page") int page, @Query("k") String k);
+    //获取查询的文章，k指的是用户输入的词
+    @POST(Api.QUERY_ARTICLES + "{page}/json")
+    Observable<ArticlesData> queryArticles(@Path("page") int page, @Query("k") String k);
 //
 //    //获取热搜词
 //    @GET(Api.HOT_KEY)

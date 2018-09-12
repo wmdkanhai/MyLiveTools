@@ -68,4 +68,37 @@ public class ArticlesDataRemoteSource implements ArticlesDataSource {
                 });
         return listObservable;
     }
+
+    @Override
+    public Observable<List<ArticleDetailData>> queryArticles(@NonNull int page, @NonNull String keyWords, @NonNull boolean forceUpdate, @NonNull boolean clearCache) {
+        Observable<List<ArticleDetailData>> listObservable = RetrofitClient.getInstance()
+                .create(RetrofitService.class)
+                .queryArticles(page, keyWords)
+                .filter(new Predicate<ArticlesData>() {
+                    @Override
+                    public boolean test(ArticlesData articlesData) throws Exception {
+                        return articlesData.getErrorCode() != -1;
+                    }
+                })
+                .flatMap(new Function<ArticlesData, ObservableSource<List<ArticleDetailData>>>() {
+                    @Override
+                    public ObservableSource<List<ArticleDetailData>> apply(ArticlesData articlesData) throws Exception {
+                        return Observable.fromIterable(articlesData.getData().getDatas()).toSortedList(new Comparator<ArticleDetailData>() {
+                            @Override
+                            public int compare(ArticleDetailData articleDetailData, ArticleDetailData t1) {
+                                return SortDescendUtil.sortArticleDetailData(articleDetailData, t1);
+                            }
+                        }).toObservable().doOnNext(new Consumer<List<ArticleDetailData>>() {
+                            @Override
+                            public void accept(List<ArticleDetailData> list) throws Exception {
+                                for (ArticleDetailData item : list) {
+                                    //saveToRealm(item);
+                                }
+                            }
+                        });
+                    }
+                });
+
+        return listObservable;
+    }
 }

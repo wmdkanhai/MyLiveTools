@@ -23,13 +23,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
     android:layout_marginTop="4dp"
     android:background="@color/layout_background"
     android:foreground="?android:attr/selectableItemBackground"
     android:stateListAnimator="@animator/lift_on_touch"
-    app:cardCornerRadius="8dp"
     app:cardElevation="2dp">
 
 
@@ -44,19 +41,21 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/colorPrimary" />
+                android:layout_height="40dp"
+                android:background="@color/gray" />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_category"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_view_category"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/button_my_style"
-                android:textColor="@color/white"
-                tools:text="Button" />
+                android:drawablePadding="8dp"
+                android:drawableTint="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="Android学习"
+                android:textColor="@android:color/white" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/text_view_time"
@@ -96,9 +95,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:drawablePadding="8dp"
-                android:drawableTint="@color/colorPrimary"
                 android:gravity="center_vertical"
-                android:textColor="@color/colorPrimary"
                 tools:text="Xiao Ming" />
         </LinearLayout>
     </LinearLayout>

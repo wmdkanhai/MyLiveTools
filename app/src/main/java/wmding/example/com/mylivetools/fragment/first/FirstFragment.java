@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import wmding.example.com.mylivetools.data.ArticlesDataRepository;
 import wmding.example.com.mylivetools.data.remote.ArticlesDataRemoteSource;
 import wmding.example.com.mylivetools.interfaze.OnCategoryOnClickListener;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
+import wmding.example.com.mylivetools.utils.NetworkUtil;
 
 public class FirstFragment extends Fragment implements ArticlesContract.View {
 
@@ -35,9 +37,10 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
     private ArticlesAdapter adapter;
 
 
-
     private final int INDEX = 0;
     private int currentPage;
+    private int articlesListSize;
+
 
     private boolean isFirstLoad = true;
 
@@ -55,7 +58,7 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new ArticlesPresenter(this,ArticlesDataRepository.getInstance(ArticlesDataRemoteSource.getInstance()));
+        new ArticlesPresenter(this, ArticlesDataRepository.getInstance(ArticlesDataRemoteSource.getInstance()));
     }
 
     @Override
@@ -74,7 +77,31 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
             }
         });
 
+        //滑动到底部加载下一页
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    loadMore();
+                }
+            }
+        });
+
+
         return view;
+    }
+
+
+    private void loadMore() {
+        boolean isNetworkAvailable = NetworkUtil.isNetworkAvailable(getContext());
+        if (isNetworkAvailable) {
+            currentPage += 1;
+            presenter.getArticles(currentPage, true, false);
+        } else {
+            Toast.makeText(getContext(), "Network is not available", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -139,9 +166,9 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
 
     @Override
     public void showArticles(List<ArticleDetailData> list) {
-        if (adapter!=null){
+        if (adapter != null) {
             adapter.updateData(list);
-        }else {
+        } else {
             adapter = new ArticlesAdapter(getContext(), list);
             adapter.setCategoryListener(new OnCategoryOnClickListener() {
                 @Override
@@ -172,6 +199,8 @@ public class FirstFragment extends Fragment implements ArticlesContract.View {
             adapter.setHeaderView(null);
             recyclerView.setAdapter(adapter);
         }
+        articlesListSize = list.size();
+
     }
 
     @Override
