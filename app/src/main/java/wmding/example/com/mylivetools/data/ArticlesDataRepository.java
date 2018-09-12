@@ -113,6 +113,50 @@ public class ArticlesDataRepository implements ArticlesDataSource {
 
     @Override
     public Observable<List<ArticleDetailData>> queryArticles(@NonNull int page, @NonNull String keyWords, @NonNull boolean forceUpdate, @NonNull final boolean clearCache) {
+
+        if (!forceUpdate && queryCache != null) {
+            return Observable.fromIterable(new ArrayList<>(queryCache.values()))
+                    .toSortedList(new Comparator<ArticleDetailData>() {
+                        @Override
+                        public int compare(ArticleDetailData articleDetailData, ArticleDetailData t1) {
+                            return SortDescendUtil.sortArticleDetailData(articleDetailData, t1);
+                        }
+                    }).toObservable();
+        }
+
+        if (!clearCache && queryCache != null) {
+            Observable ob1 = Observable.fromIterable(new ArrayList<>(queryCache.values()))
+                    .toSortedList(new Comparator<ArticleDetailData>() {
+                        @Override
+                        public int compare(ArticleDetailData articleDetailData, ArticleDetailData t1) {
+                            return SortDescendUtil.sortArticleDetailData(articleDetailData, t1);
+                        }
+                    }).toObservable();
+
+            Observable ob2 = mArticlesDataSource.queryArticles(page, keyWords, forceUpdate, clearCache)
+                    .doOnNext(new Consumer<List<ArticleDetailData>>() {
+                        @Override
+                        public void accept(List<ArticleDetailData> list) throws Exception {
+                            refreshQueryCache(clearCache, list);
+                        }
+                    });
+
+            return Observable.merge(ob1, ob2).collect(new Callable<List<ArticleDetailData>>() {
+
+                @Override
+                public List<ArticleDetailData> call() throws Exception {
+                    return new ArrayList<>();
+                }
+
+            }, new BiConsumer<List<ArticleDetailData>, List<ArticleDetailData>>() {
+                @Override
+                public void accept(List<ArticleDetailData> list, List<ArticleDetailData> dataList) throws Exception {
+                    list.addAll(dataList);
+                }
+            }).toObservable();
+        }
+
+
         Observable<List<ArticleDetailData>> listObservable = mArticlesDataSource.queryArticles(page, keyWords, forceUpdate, clearCache)
                 .doOnNext(new Consumer<List<ArticleDetailData>>() {
                     @Override

@@ -6,6 +6,7 @@
     <string name="nav_third_name">第三个</string>
 
     <string name="search_articles">搜索文章</string>
+    <string name="detail_label">文章详情</string>
 
     <string name="nav_sign_out">登出</string>
 
