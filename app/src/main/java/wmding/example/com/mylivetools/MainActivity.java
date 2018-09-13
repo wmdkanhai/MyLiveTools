@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         item.setCheckable(false);
         switch (item.getItemId()) {
             case R.id.nav_sign_out:
-                Toast.makeText(this, "注销了", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             default:
                 break;
