@@ -11,14 +11,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import wmding.example.com.mylivetools.activity.Main2Activity;
 import wmding.example.com.mylivetools.fragment.first.FirstFragment;
 import wmding.example.com.mylivetools.fragment.second.SecondFragment;
 import wmding.example.com.mylivetools.fragment.third.ThirdFragment;
 import wmding.example.com.mylivetools.module.search.SearchActivity;
+import wmding.example.com.mylivetools.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String applicationID = Utils.getApplicationID(this);
+        Log.e("------appid----:s",applicationID);
+
+        Toast.makeText(this,applicationID,Toast.LENGTH_LONG).show();
+
 
         initView();
         initFragments(savedInstanceState);
@@ -185,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                Intent intent = new Intent(this, SearchActivity.class);
+                Intent intent = new Intent(this, Main2Activity.class);
                 startActivity(intent);
                 break;
             default:
