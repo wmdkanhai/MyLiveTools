@@ -6,5 +6,7 @@
     <color name="gray">#ccc</color>
     <color name="layout_background">#fafafa</color>
     <color name="colorNavItemUnselected">#a5a5a5</color>
+    <!--页面背景的颜色-->
+    <color name="colorPageBg">#f2f4f5</color>
 
 </resources>

@@ -1,18 +1,18 @@
 package wmding.example.com.mylivetools;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,8 +21,7 @@ import wmding.example.com.mylivetools.activity.Main2Activity;
 import wmding.example.com.mylivetools.fragment.first.FirstFragment;
 import wmding.example.com.mylivetools.fragment.second.SecondFragment;
 import wmding.example.com.mylivetools.fragment.third.ThirdFragment;
-import wmding.example.com.mylivetools.module.search.SearchActivity;
-import wmding.example.com.mylivetools.utils.Utils;
+import wmding.example.com.mylivetools.module.about.AboutActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -206,13 +205,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setCheckable(false);
+        drawerLayout.closeDrawer(GravityCompat.START);
         switch (item.getItemId()) {
             case R.id.nav_sign_out:
                 finish();
                 break;
+            case R.id.nav_about_me:
+                startActivity(new Intent(this, AboutActivity.class));
+                break;
             default:
                 break;
         }
+
         return true;
     }
 

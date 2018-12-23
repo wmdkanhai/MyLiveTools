@@ -32,7 +32,11 @@
         <activity
             android:name=".activity.Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.about.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBarNar"
+            />
     </application>
 
 </manifest>
