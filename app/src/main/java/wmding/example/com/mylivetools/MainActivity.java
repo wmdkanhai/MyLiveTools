@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import wmding.example.com.mylivetools.activity.Main2Activity;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         initView();
         initFragments(savedInstanceState);
 
@@ -97,8 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -120,6 +120,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        // 设置navigationView 上头布局，个人信息
+        View headerView = navigationView.getHeaderView(0);
+        TextView textUserIcon = headerView.findViewById(R.id.text_user_icon);
+        textUserIcon.setText("wmding");
+        TextView textUserName = headerView.findViewById(R.id.text_user_name);
+        textUserName.setText("小明");
 
     }
 

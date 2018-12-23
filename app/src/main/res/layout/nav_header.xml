@@ -47,6 +47,6 @@
         android:paddingBottom="8dp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        tools:text="badteacher2" />
+        tools:text="11111111" />
 
 </FrameLayout>
