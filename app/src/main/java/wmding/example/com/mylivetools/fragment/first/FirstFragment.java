@@ -21,7 +21,6 @@ import wmding.example.com.mylivetools.R;
 import wmding.example.com.mylivetools.bean.ArticleDetailData;
 import wmding.example.com.mylivetools.data.ArticlesDataRepository;
 import wmding.example.com.mylivetools.data.remote.ArticlesDataRemoteSource;
-import wmding.example.com.mylivetools.interfaze.OnCategoryOnClickListener;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
 import wmding.example.com.mylivetools.module.detail.DetailActivity;
 import wmding.example.com.mylivetools.utils.NetworkUtil;

@@ -5,12 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import wmding.example.com.mylivetools.R;
 
 
 public class SecondFragment extends Fragment {
+
 
     public SecondFragment() {
         // Required empty public constructor
