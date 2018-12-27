@@ -32,11 +32,11 @@
         <activity
             android:name=".activity.Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBarPlus" />
         <activity
             android:name=".module.about.AboutActivity"
-            android:theme="@style/AppTheme.NoActionBarNar"
-            />
+            android:theme="@style/AppTheme.NoActionBarNar" />
+        <activity android:name=".fragment.third.ImageDetailActivity"></activity>
     </application>
 
 </manifest>

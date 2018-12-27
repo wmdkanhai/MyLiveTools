@@ -37,6 +37,14 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mCategoryResult = categoryResult;
     }
 
+    public OnRecyclerViewItemOnClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnRecyclerViewItemOnClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -86,7 +94,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         @Override
         public void onClick(View view) {
 
-
+            listener.onClick(view, getAdapterPosition());
         }
     }
 }

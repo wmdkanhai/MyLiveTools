@@ -69,4 +69,8 @@ dependencies {
 
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    // 图片缩放
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
 }

@@ -52,6 +52,10 @@ public class ThirdPresenter implements ThirdContract.Presenter {
 
                         Log.e(TAG,e.getMessage());
 
+                        if (mView.isActive()) {
+                            //设置加载控件不显示
+                            mView.setLoadingIndicator(false);
+                        }
                     }
 
                     @Override
