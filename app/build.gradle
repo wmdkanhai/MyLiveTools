@@ -73,4 +73,7 @@ dependencies {
     // 图片缩放
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
+    // butterknife
+    implementation 'com.jakewharton:butterknife:8.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 }

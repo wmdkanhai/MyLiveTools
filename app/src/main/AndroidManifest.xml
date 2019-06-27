@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".module.splash.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".module.search.SearchActivity"
             android:label="@string/search_articles"
@@ -36,7 +40,7 @@
         <activity
             android:name=".module.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBarNar" />
-        <activity android:name=".fragment.third.ImageDetailActivity"></activity>
+        <activity android:name=".fragment.third.ImageDetailActivity" />
     </application>
 
 </manifest>
