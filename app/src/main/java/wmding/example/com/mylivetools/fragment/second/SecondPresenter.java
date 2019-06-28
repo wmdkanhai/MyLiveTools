@@ -1,4 +1,4 @@
-package wmding.example.com.mylivetools.fragment.third;
+package wmding.example.com.mylivetools.fragment.second;
 
 import android.util.Log;
 
@@ -11,46 +11,51 @@ import wmding.example.com.mylivetools.net.NetWork;
 
 /**
  * @author wmding
- * @date 2018/12/24
+ * @date 2019/6/28
  * @describe
  */
-public class ThirdPresenter implements ThirdContract.Presenter {
+public class SecondPresenter implements SecondContract.Presenter {
+    private static final String TAG = "SecondPresenter";
 
-    private static final String TAG = "ThirdPresenter";
-    private ThirdContract.View mView;
+    private SecondContract.View mView;
 
-    public ThirdPresenter(ThirdContract.View view) {
+    public SecondPresenter(SecondContract.View view) {
         mView = view;
-        this.mView.setPresenter(this);
+        mView.setPresenter(this);
     }
 
     @Override
-    public void getImages(String category, int count, int page) {
-        NetWork.getGankApi()
-                .getCategoryData(category, count, page)
+    public void getItemData(final boolean isRefresh, int page, int count) {
+
+        NetWork.getGankApi().getCategoryData("Android", count, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CategoryResult>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(Disposable disposable) {
 
                     }
 
                     @Override
-                    public void onNext(CategoryResult value) {
+                    public void onNext(CategoryResult categoryResult) {
 
-                        Log.e(TAG,value.toString());
+                        Log.d(TAG, categoryResult.toString());
 
-                        if (mView.isActive()){
-                            mView.showImages(value);
+                        if (mView.isActive()) {
+
+                            if (!isRefresh) {
+                                mView.showItem(categoryResult);
+                            } else {
+                                mView.addItem(categoryResult);
+                            }
+
                         }
 
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
-                        Log.e(TAG,e.getMessage());
+                    public void onError(Throwable throwable) {
+                        Log.e(TAG, throwable.getMessage());
 
                         if (mView.isActive()) {
                             //设置加载控件不显示
@@ -70,8 +75,6 @@ public class ThirdPresenter implements ThirdContract.Presenter {
 
     }
 
-
-
     @Override
     public void subscribe() {
 
@@ -79,6 +82,5 @@ public class ThirdPresenter implements ThirdContract.Presenter {
 
     @Override
     public void unSubscribe() {
-
     }
 }

@@ -22,6 +22,9 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.tv_jump)
     TextView mTvJump;
 
+    private boolean isIn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +56,13 @@ public class SplashActivity extends AppCompatActivity {
      * 跳转到主页面
      */
     private void toMainActivity() {
+        if (isIn) {
+            return;
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();
+        isIn = true;
     }
 }
