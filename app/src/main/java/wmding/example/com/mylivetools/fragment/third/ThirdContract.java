@@ -12,8 +12,8 @@ import wmding.example.com.mylivetools.bean.CategoryResult;
 public interface ThirdContract {
 
     interface Presenter extends BasePresenter {
-        void getImages(String category, int count, int page);
 
+        void getImages(boolean isRefresh, String category, int count, int page);
     }
 
 
@@ -22,6 +22,8 @@ public interface ThirdContract {
         boolean isActive();
 
         void showImages(CategoryResult categoryResult);
+
+        void addImages(CategoryResult categoryResult);
 
         /**
          * 设置下拉加载的控件

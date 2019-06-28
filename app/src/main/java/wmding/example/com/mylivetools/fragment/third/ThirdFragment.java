@@ -29,10 +29,9 @@ public class ThirdFragment extends Fragment implements ThirdContract.View {
     private NestedScrollView nestedScrollView;
 
     private ThirdContract.Presenter mPresenter;
-    private final int INDEX = 0;
     private int currentPage;
-    private boolean isFirstLoad = true;
     private String category = "福利";
+    private ImageAdapter mImageAdapter;
 
 
     public ThirdFragment() {
@@ -72,8 +71,8 @@ public class ThirdFragment extends Fragment implements ThirdContract.View {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currentPage = INDEX;
-                mPresenter.getImages(category, 10, currentPage);
+                currentPage = 0;
+                mPresenter.getImages(false, category, 10, currentPage);
             }
         });
 
@@ -88,30 +87,21 @@ public class ThirdFragment extends Fragment implements ThirdContract.View {
             }
         });
 
-
-        mPresenter = new ThirdPresenter(this);
-
         initData();
     }
 
     private void initData() {
 
-        //根据是否是首次加载，如果是首次加载，就从首页加载，否则从当前页加载
-        if (isFirstLoad) {
-            mPresenter.getImages(category, 10, INDEX);
+        mPresenter = new ThirdPresenter(this);
+        mPresenter.getImages(false, category, 10, 0);
 
-            currentPage = INDEX;
-            isFirstLoad = false;
-        } else {
-            mPresenter.getImages(category, 10, currentPage);
-        }
     }
 
     private void loadMore() {
         boolean isNetworkAvailable = NetworkUtil.isNetworkAvailable(getContext());
         if (isNetworkAvailable) {
             currentPage += 1;
-            mPresenter.getImages(category, 10, currentPage);
+            mPresenter.getImages(true, category, 10, currentPage);
         } else {
             Toast.makeText(getContext(), "Network is not available", Toast.LENGTH_LONG).show();
         }
@@ -125,12 +115,12 @@ public class ThirdFragment extends Fragment implements ThirdContract.View {
 
     @Override
     public void showImages(final CategoryResult categoryResult) {
-        ImageAdapter imageAdapter = new ImageAdapter(getContext(), categoryResult);
+        mImageAdapter = new ImageAdapter(getContext(), categoryResult.results);
 
-        imageAdapter.setListener(new OnRecyclerViewItemOnClickListener() {
+        mImageAdapter.setListener(new OnRecyclerViewItemOnClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Log.e(TAG,"点击的图片的地址："+categoryResult.results.get(position));
+                Log.e(TAG, "点击的图片的地址：" + categoryResult.results.get(position));
 
                 String url = categoryResult.results.get(position).getUrl();
                 toImageDetailActivity(url);
@@ -138,15 +128,20 @@ public class ThirdFragment extends Fragment implements ThirdContract.View {
         });
         //瀑布效果
         mRecyclerViewImage.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mRecyclerViewImage.setAdapter(imageAdapter);
+        mRecyclerViewImage.setAdapter(mImageAdapter);
 
+    }
+
+    @Override
+    public void addImages(CategoryResult categoryResult) {
+        mImageAdapter.addImages(categoryResult.results);
     }
 
 
     private void toImageDetailActivity(String url) {
         Intent intent = new Intent();
-        intent.putExtra("imageUrl",url);
-        intent.setClass(getContext().getApplicationContext(),ImageDetailActivity.class);
+        intent.putExtra("imageUrl", url);
+        intent.setClass(getContext().getApplicationContext(), ImageDetailActivity.class);
         startActivity(intent);
     }
 

@@ -25,7 +25,7 @@ public class ThirdPresenter implements ThirdContract.Presenter {
     }
 
     @Override
-    public void getImages(String category, int count, int page) {
+    public void getImages(final boolean isRefresh, String category, int count, int page) {
         NetWork.getGankApi()
                 .getCategoryData(category, count, page)
                 .subscribeOn(Schedulers.io())
@@ -42,7 +42,14 @@ public class ThirdPresenter implements ThirdContract.Presenter {
                         Log.e(TAG,value.toString());
 
                         if (mView.isActive()){
-                            mView.showImages(value);
+
+                            if (!isRefresh){
+                                mView.showImages(value);
+                            }else {
+                                mView.addImages(value);
+
+                            }
+
                         }
 
                     }

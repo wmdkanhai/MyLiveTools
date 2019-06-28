@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import wmding.example.com.mylivetools.R;
 import wmding.example.com.mylivetools.bean.CategoryResult;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
@@ -25,16 +27,20 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private Context context;
     private LayoutInflater inflater;
-
-    private CategoryResult mCategoryResult;
-
+    private List<CategoryResult.ResultsBean> mList;
     private OnRecyclerViewItemOnClickListener listener;
 
+    public void addImages(List data){
+        if (data != null){
+            mList.addAll(data);
+        }
+        notifyDataSetChanged();
+    }
 
-    public ImageAdapter(Context context, CategoryResult categoryResult) {
+    public ImageAdapter(Context context, List<CategoryResult.ResultsBean> list) {
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
-        mCategoryResult = categoryResult;
+        this.mList = list;
     }
 
     public OnRecyclerViewItemOnClickListener getListener() {
@@ -60,7 +66,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         ViewHolder viewHolder = (ViewHolder) holder;
-        String url = mCategoryResult.results.get(position).getUrl();
+        String url = mList.get(position).getUrl();
 
         //屏幕的宽度(px值）
         int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
@@ -74,7 +80,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mCategoryResult.results.size();
+        return mList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
