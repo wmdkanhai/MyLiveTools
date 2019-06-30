@@ -13,7 +13,6 @@ import java.util.List;
 import wmding.example.com.mylivetools.R;
 import wmding.example.com.mylivetools.bean.ArticleDetailData;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
-import wmding.example.com.mylivetools.utils.StringUtil;
 
 
 /**
@@ -49,7 +48,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         CategoryViewHolder categoryViewHolder = (CategoryViewHolder) holder;
         ArticleDetailData data = list.get(position);
         categoryViewHolder.textAuthor.setText(data.getAuthor());
-        categoryViewHolder.textTitle.setText(StringUtil.replaceInvalidChar(data.getTitle()));
+//        categoryViewHolder.textTitle.setText(StringUtil.replaceInvalidChar(data.getTitle()));
+        categoryViewHolder.textTitle.setText(data.getTitle());
     }
 
     public void updateData(List<ArticleDetailData> list) {

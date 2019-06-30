@@ -13,13 +13,13 @@
         android:background="@drawable/background" />
 
     <TextView
-        android:gravity="center"
         android:id="@+id/tv_jump"
         android:layout_width="70dp"
         android:layout_height="30dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/shape_jump"
+        android:gravity="center"
         android:text="跳过"
         android:textColor="#fff"
         android:textSize="16sp"

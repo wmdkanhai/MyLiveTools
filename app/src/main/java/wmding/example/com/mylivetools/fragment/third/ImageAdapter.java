@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import wmding.example.com.mylivetools.R;
-import wmding.example.com.mylivetools.bean.CategoryResult;
+import wmding.example.com.mylivetools.bean.ResultsBean;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
 
 import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
@@ -27,7 +27,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private Context context;
     private LayoutInflater inflater;
-    private List<CategoryResult.ResultsBean> mList;
+    private List<ResultsBean> mList;
     private OnRecyclerViewItemOnClickListener listener;
 
     public void addImages(List data){
@@ -37,7 +37,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public ImageAdapter(Context context, List<CategoryResult.ResultsBean> list) {
+    public ImageAdapter(Context context, List<ResultsBean> list) {
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
         this.mList = list;

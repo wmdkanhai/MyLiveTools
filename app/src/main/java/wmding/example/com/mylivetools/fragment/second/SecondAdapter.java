@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import wmding.example.com.mylivetools.R;
-import wmding.example.com.mylivetools.bean.CategoryResult;
+import wmding.example.com.mylivetools.bean.ResultsBean;
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener;
 
 /**
@@ -20,12 +19,11 @@ import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListene
  * @date 2019/6/28
  * @describe
  */
-public class SecondAdapter<T> extends RecyclerView.Adapter {
+public class SecondAdapter extends RecyclerView.Adapter {
 
-    private Context mContext;
     private LayoutInflater inflater;
 
-    private List<CategoryResult.ResultsBean> mList;
+    private List<ResultsBean> mList;
 
     public void addData(List data){
         if (data != null){
@@ -44,9 +42,8 @@ public class SecondAdapter<T> extends RecyclerView.Adapter {
         this.listener = listener;
     }
 
-    public SecondAdapter(Context context,List data) {
-        mContext = context;
-        this.mList = data == null ? (List<T>) new ArrayList<>() : data;
+    public SecondAdapter(Context context,List<ResultsBean> data) {
+        this.mList = data;
         inflater = LayoutInflater.from(context);
     }
 
