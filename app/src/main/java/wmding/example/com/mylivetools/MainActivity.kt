@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -14,10 +13,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-
 import wmding.example.com.mylivetools.activity.Main2Activity
 import wmding.example.com.mylivetools.fragment.first.FirstFragment
 import wmding.example.com.mylivetools.fragment.second.SecondFragment
@@ -40,6 +37,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     private var mExitTime: Long = 0
 
+    companion object {
+
+        private val KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID = "KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initFragments(savedInstanceState)
 
         if (savedInstanceState != null) {
-            val selectId = savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID)
-            when (selectId) {
+            when (savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID)) {
                 R.id.nav_first -> showFragment(mFirstFragment)
                 R.id.nav_second -> showFragment(mSecondFragment)
                 R.id.nav_third -> showFragment(mThirdFragment)
@@ -66,21 +66,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, bottomNavigationView!!.selectedItemId)
         val fragmentManager = supportFragmentManager
-        if (mFirstFragment!!.isAdded) {
-            fragmentManager.putFragment(outState, FirstFragment::class.java!!.getSimpleName(), mFirstFragment)
-        } else if (mSecondFragment!!.isAdded) {
-            fragmentManager.putFragment(outState, SecondFragment::class.java!!.getSimpleName(), mSecondFragment)
-        } else if (mThirdFragment!!.isAdded) {
-            fragmentManager.putFragment(outState, ThirdFragment::class.java!!.getSimpleName(), mThirdFragment)
-        }
+//        if (mFirstFragment!!.isAdded) {
+//            fragmentManager.putFragment(outState, FirstFragment::class.java!!.getSimpleName(), mFirstFragment)
+//        } else if (mSecondFragment!!.isAdded) {
+//            fragmentManager.putFragment(outState, SecondFragment::class.java!!.getSimpleName(), mSecondFragment)
+//        } else if (mThirdFragment!!.isAdded) {
+//            fragmentManager.putFragment(outState, ThirdFragment::class.java!!.getSimpleName(), mThirdFragment)
+//        }
 
+        when {
+            mFirstFragment!!.isAdded -> fragmentManager.putFragment(outState, FirstFragment::class.java!!.simpleName, mFirstFragment)
+            mSecondFragment!!.isAdded -> fragmentManager.putFragment(outState, SecondFragment::class.java!!.simpleName, mSecondFragment)
+            mThirdFragment!!.isAdded -> fragmentManager.putFragment(outState, ThirdFragment::class.java!!.simpleName, mThirdFragment)
+        }
     }
 
     private fun initView() {
         toolbar = findViewById(R.id.toolBar)
         setSupportActionBar(toolbar)
+
         navigationView = findViewById(R.id.nav_view)
+
         drawerLayout = findViewById(R.id.drawer_layout)
+
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout!!.addDrawerListener(toggle)
         toggle.syncState()
@@ -143,27 +151,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showFragment(fragment: Fragment?) {
         val fragmentManager = supportFragmentManager
-        if (fragment is FirstFragment) {
-            fragmentManager.beginTransaction()
-                    .show(mFirstFragment)
-                    .hide(mSecondFragment)
-                    .hide(mThirdFragment)
-                    .commit()
-            setTitle(R.string.nav_first_name)
-        } else if (fragment is SecondFragment) {
-            fragmentManager.beginTransaction()
-                    .show(mSecondFragment)
-                    .hide(mFirstFragment)
-                    .hide(mThirdFragment)
-                    .commit()
-            setTitle(R.string.nav_second_name)
-        } else if (fragment is ThirdFragment) {
-            fragmentManager.beginTransaction()
-                    .show(mThirdFragment)
-                    .hide(mFirstFragment)
-                    .hide(mSecondFragment)
-                    .commit()
-            setTitle(R.string.nav_third_name)
+        when (fragment) {
+            is FirstFragment -> {
+                fragmentManager.beginTransaction()
+                        .show(mFirstFragment)
+                        .hide(mSecondFragment)
+                        .hide(mThirdFragment)
+                        .commit()
+                setTitle(R.string.nav_first_name)
+            }
+            is SecondFragment -> {
+                fragmentManager.beginTransaction()
+                        .show(mSecondFragment)
+                        .hide(mFirstFragment)
+                        .hide(mThirdFragment)
+                        .commit()
+                setTitle(R.string.nav_second_name)
+            }
+            is ThirdFragment -> {
+                fragmentManager.beginTransaction()
+                        .show(mThirdFragment)
+                        .hide(mFirstFragment)
+                        .hide(mSecondFragment)
+                        .commit()
+                setTitle(R.string.nav_third_name)
+            }
         }
 
     }
@@ -211,10 +223,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             finish()
         }
 
-    }
-
-    companion object {
-
-        private val KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID = "KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID"
     }
 }

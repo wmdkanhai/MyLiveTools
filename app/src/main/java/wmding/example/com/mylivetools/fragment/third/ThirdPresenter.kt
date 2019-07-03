@@ -16,6 +16,11 @@ import wmding.example.com.mylivetools.net.NetWork
  */
 class ThirdPresenter(private val mView: ThirdContract.View) : ThirdContract.Presenter {
 
+    companion object {
+
+        private const val TAG = "ThirdPresenter"
+    }
+
     init {
         this.mView.setPresenter(this)
     }
@@ -74,10 +79,5 @@ class ThirdPresenter(private val mView: ThirdContract.View) : ThirdContract.Pres
 
     override fun unSubscribe() {
 
-    }
-
-    companion object {
-
-        private val TAG = "ThirdPresenter"
     }
 }

@@ -7,11 +7,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.widget.NestedScrollView
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_second.*
 import wmding.example.com.mylivetools.R
 import wmding.example.com.mylivetools.bean.CategoryResult
 import wmding.example.com.mylivetools.interfaze.OnRecyclerViewItemOnClickListener
@@ -21,7 +21,6 @@ import wmding.example.com.mylivetools.utils.NetworkUtil
 
 class SecondFragment : Fragment(), SecondContract.View {
 
-    private var mRecyclerView: RecyclerView? = null
     private var mRefreshLayout: SwipeRefreshLayout? = null
     private var mNestedScrollView: NestedScrollView? = null
 
@@ -52,7 +51,6 @@ class SecondFragment : Fragment(), SecondContract.View {
 
 
     override fun initViews(view: View) {
-        mRecyclerView = view.findViewById(R.id.recycler_view)
 
         mRefreshLayout = view.findViewById(R.id.refresh_layout)
         mRefreshLayout!!.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
@@ -79,6 +77,7 @@ class SecondFragment : Fragment(), SecondContract.View {
     private fun initData() {
         mSecondPresenter = SecondPresenter(this)
         mSecondPresenter!!.getItemData(false, INDEX, COUNT)
+
     }
 
 
@@ -96,9 +95,9 @@ class SecondFragment : Fragment(), SecondContract.View {
 
     override fun showItem(categoryResult: CategoryResult) {
         val linearLayoutManager = LinearLayoutManager(context)
-        mRecyclerView!!.layoutManager = linearLayoutManager
+        recycler_view!!.layoutManager = linearLayoutManager
         mSecondAdapter = SecondAdapter(context, categoryResult.results)
-        mRecyclerView!!.adapter = mSecondAdapter
+        recycler_view!!.adapter = mSecondAdapter
         mSecondAdapter!!.listener = object : OnRecyclerViewItemOnClickListener {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(context, DetailActivity::class.java)
